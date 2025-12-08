@@ -37,7 +37,7 @@ If you want to reproduce our analysis and see all the figures and tables from ou
    - Open RStudio and set your working directory to the project folder.
 
 2. **Make Sure the Data Files Are There**
-   - The following CSV files need to be in the **same folder** as `Model Building.Rmd`:
+   - The following CSV files need to be in the **same folder** as `ModelBuilding.Rmd`:
      - `mean_max_monthly_temps_2000_2025.csv`
      - `mean_min_monthly_temps_2000_2025.csv`
    - These files are included in the repository, so you shouldn’t need to download anything else.
