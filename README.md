@@ -59,6 +59,8 @@ If you want to reproduce our analysis and see all the figures and tables from ou
 5. **Troubleshooting**
    - Make sure your working directory is the project folder and the CSV files are in the right place.
    - If anything seems off, you can run `sessionInfo()` in R to check your package versions.
+  
+## References
 
 
 
