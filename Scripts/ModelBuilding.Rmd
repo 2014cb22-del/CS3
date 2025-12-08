@@ -38,6 +38,32 @@ maxtemp_timeseries <- ts(maxtemp_sorted$Value,frequency=12,start=c(2000,1))
 ```
 
 
+```{r}
+plotForecastErrors <- function(forecasterrors)
+  {
+    forecasterrors <- na.omit(forecasterrors)
+     # make a histogram of the forecast errors:
+     mybinsize <- IQR(forecasterrors)/4
+     mysd   <- sd(forecasterrors, na.rm=T)
+     mymin  <- min(forecasterrors, na.rm=T) - mysd*5
+     mymax  <- max(forecasterrors, na.rm=T) + mysd*3
+     # generate normally distributed data with mean 0 and standard deviation mysd
+     mynorm <- rnorm(10000, mean=0, sd=mysd)
+     mymin2 <- min(mynorm)
+     mymax2 <- max(mynorm)
+     if (mymin2 < mymin) { mymin <- mymin2 }
+     if (mymax2 > mymax) { mymax <- mymax2 }
+     # make a red histogram of the forecast errors, with the normally distributed data overlaid:
+     mybins <- seq(mymin, mymax, mybinsize)
+     hist(forecasterrors, col="red", freq=FALSE, breaks=mybins)
+     # freq=FALSE ensures the area under the histogram = 1
+     # generate normally distributed data with mean 0 and standard deviation mysd
+     myhist <- hist(mynorm, plot=FALSE, breaks=mybins)
+     # plot the normal curve as a blue line on top of the histogram of forecast errors:
+     points(myhist$mids, myhist$density, type="l", col="blue", lwd=2)
+  }
+```
+
 
 **ARIMA MODEL**
 
@@ -122,8 +148,8 @@ acf(maxtempforecast2$residuals,lag.max=20) # correlogram
 Box.test(maxtempforecast2$residuals, lag=20, type="Ljung-Box") # Ljung-Box test
 checkresiduals(maxtemp_arima) # chceck that residuals are insignificant
 
-plot.ts(maxtempforecast$residuals)
-plotForecastErrors(maxtempforecast$residuals) # normally distributed with mean 0
+plot.ts(maxtempforecast2$residuals)
+plotForecastErrors(maxtempforecast2$residuals) # normally distributed with mean 0
 ```
 
 Based on our model and forecast values, we see that the correlogram shows that barely any of the sample autocorrelations for lags 1-20 exceed significance bounds, the p-value of the Ljung-Box test is 0.84, and the p-value of our residuals is 0.62. We can conclude there is little evidence for non-zero autocorrelations in the forecast errors. 
