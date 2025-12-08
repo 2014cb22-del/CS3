@@ -18,7 +18,7 @@ This repository contains all of the materials necessary to complete this case st
   - `mean_max_monthly_temps_2000_2025.csv` – Just the mean maximum monthly temperature data. 
   - `mean_min_monthly_temps_2000_2025.csv` – Just the mean mimimum monthly temperature data. 
  2. **Scripts**
-  - `Model Building.Rmd` – Model building script where time series model is fitted and forecats are made.
+  - `ModelBuilding.Rmd` – Model building script where time series model is fitted and forecats are made.
  3. **Supplemental Materials**
   - `A Practical Guide to ARIMA with auto.arima Function in R | by Zaki Nurkholis | Medium.pdf` – Article on the technicalbackground of building ARIMA models and making forecasts.
   - `What Is Climate Change? | United Nations.pdf` – Writing on the importance of studying temperatures rising.
@@ -51,7 +51,7 @@ If you want to reproduce our analysis and see all the figures and tables from ou
      ```
 
 4. **Run the Analysis**
-   - Open `Model Building.Rmd` in RStudio.
+   - Open `ModelBuilding.Rmd` in RStudio.
    - Feel free to change the h values in the forecast function to predict more into the future (set to 12 right now to predict 12 months into future)
    - Click **Knit** to run all the code and generate the full report.
    - This will produce the HTML (or PDF) report with all of our results, including plots, tables, and model outputs.
