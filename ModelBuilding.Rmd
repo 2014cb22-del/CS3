@@ -1,0 +1,144 @@
+---
+title: "Project 2 MI3"
+author: "Cameron Barlow"
+date: "2025-10-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+This file focuses on taking our cleaned dataset and building a time series model for both average min and max temperatures
+
+
+```{r}
+library(forecast)
+mintemp <- read.csv("mean_min_monthly_temps_2000_2025.csv")
+maxtemp <- read.csv("mean_max_monthly_temps_2000_2025.csv")
+
+mintemp_dat <- mintemp[mintemp$Year != c(2024,2025), ]
+maxtemp_dat <- maxtemp[maxtemp$Year != c(2024,2025), ]
+
+# order of months
+month_levels <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+                  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+# min temp reordered and stored as time series
+mintemp_dat$Month <- factor(mintemp_dat$Month, levels = month_levels)
+mintemp_sorted <- mintemp_dat[order(mintemp_dat$Year, mintemp_dat$Month), ]
+
+mintemp_timeseries <- ts(mintemp_sorted$Mean_Min_Temp,frequency=12,start=c(2000,1))
+
+# max temp reordered and stored as time series
+maxtemp_dat$Month <- factor(maxtemp_dat$Month, levels = month_levels)
+maxtemp_sorted <- maxtemp_dat[order(maxtemp_dat$Year, maxtemp_dat$Month), ]
+
+maxtemp_timeseries <- ts(maxtemp_sorted$Value,frequency=12,start=c(2000,1))
+```
+
+
+
+**ARIMA MODEL**
+
+We can make a better model by taking correlations in the data into account. We wanted to try making an ARIMA (Autoregressive Integrated Moving Average) model as well. 
+
+Based on the tutorial and some trial-and-error in our model building, we realized our data needed to be differenced prior to determing what ARIMA parameters would best fit our model.
+
+Once forcing a manual difference, we can use the auto.arima function to figure out the parameters of our ARIMA model.
+```{r}
+mintemp_arima <- auto.arima(
+  mintemp_timeseries,
+  d = 1,              # force one regular difference
+  D = 1,              # seasonal difference (12-month)
+  max.p = 5, max.q = 5,
+  max.P = 2, max.Q = 2,
+  stepwise = FALSE, approx = FALSE,
+  trace = TRUE
+)
+
+mintemp_arima
+```
+
+Based on the auto.arima() function, we can determine that an ARIMA(0,1,1)x(2,1,0)[12] best fits our data. We can use this model to forecast for 2024. We want to check that this model meets all assumptions.
+```{r}
+mintempforecast2 <- forecast(mintemp_arima, h=12) # change h here to play around with forecasts farther into future
+mintempforecast2
+plot(mintempforecast2) # add forecast values into time series plot
+
+acf(mintempforecast2$residuals,lag.max=20) # correlogram
+Box.test(mintempforecast2$residuals, lag=20, type="Ljung-Box") # Ljung-Box test
+checkresiduals(mintemp_arima) # chceck that residuals are insignificant
+
+plot.ts(mintempforecast2$residuals)
+plotForecastErrors(mintempforecast2$residuals) # normally distributed with mean 0
+```
+
+Based on our model and forecast values, we see that the correlogram shows that barely any of the sample autocorrelations for lags 1-20 exceed significance bounds, the p-value of the Ljung-Box test is 0.81, and the p-value of our residuals is 0.31. We can conclude there is little evidence for non-zero autocorrelations in the forecast errors. 
+
+From the time plot, we can see that the forecast errors have constant variance over time. From the histogram, we can also assume that forecast errors are normally distributed with mean zero.
+
+Now, let's compare our forecast values from the ARIMA model to our actual values for 2024. 
+```{r}
+# extract 2024 from our data
+mintemp_2024 <- mintemp[mintemp$Year==2024, ]
+mintemp_2024
+mintempforecast2
+```
+
+By comparing our forecast values of 2024 to our actual values of 2024, we can see that all the actual data falls in the 95% prediction interval for the forecast. Thus, we meet our goal of being at least 80% accurate with our model.
+
+# Maximum Average Temperatures
+
+**ARIMA MODEL**
+
+We wanted to try making an ARIMA (Autoregressive Integrated Moving Average) model for maximum average temperatures as well. 
+
+Based on the tutorial and some trial-and-error in our model building, we again noticed our data needed to be differenced prior to determing what ARIMA parameters would best fit our model.
+
+Once forcing a manual difference, we can use the auto.arima function to figure out the parameters of our ARIMA model.
+```{r}
+maxtemp_arima <- auto.arima(
+  maxtemp_timeseries,
+  d = 1,              # force one regular difference
+  D = 1,              # seasonal difference (12-month)
+  max.p = 5, max.q = 5,
+  max.P = 2, max.Q = 2,
+  stepwise = FALSE, approx = FALSE,
+  trace = TRUE
+)
+
+maxtemp_arima
+```
+
+Based on the auto.arima() function, we can determine that an ARIMA(0,1,1)x(2,1,2)[12] best fits our data. We can use this model to forecast for 2024. We want to check that this model meets all assumptions.
+
+```{r}
+maxtempforecast2 <- forecast(maxtemp_arima, h=12) # change h here to play around with forecasts farther into future
+maxtempforecast2
+plot(maxtempforecast2) # add forecast values into time series plot
+
+acf(maxtempforecast2$residuals,lag.max=20) # correlogram
+Box.test(maxtempforecast2$residuals, lag=20, type="Ljung-Box") # Ljung-Box test
+checkresiduals(maxtemp_arima) # chceck that residuals are insignificant
+
+plot.ts(maxtempforecast$residuals)
+plotForecastErrors(maxtempforecast$residuals) # normally distributed with mean 0
+```
+
+Based on our model and forecast values, we see that the correlogram shows that barely any of the sample autocorrelations for lags 1-20 exceed significance bounds, the p-value of the Ljung-Box test is 0.84, and the p-value of our residuals is 0.62. We can conclude there is little evidence for non-zero autocorrelations in the forecast errors. 
+
+From the time plot, we can see that the forecast errors have constant variance over time. From the histogram, we can also assume that forecast errors are normally distributed with mean zero.
+
+Now, let's compare our forecast values from the ARIMA model to our actual values for 2024. 
+```{r}
+# extract 2024 from our data
+maxtemp_2024 <- maxtemp[maxtemp$Year==2024, ]
+maxtemp_2024
+maxtempforecast2
+```
+
+By comparing our forecast values of 2024 to our actual values of 2024, we again can see that all the actual data falls in the 95% prediction interval for the forecast. Thus, we meet our goal of being at least 80% accurate with our model.
+
+Using ARIMA models with differencing and a seasonality component allowed us to build accurate models which generated prediction intervals that managed to capture our actual data points.
+
