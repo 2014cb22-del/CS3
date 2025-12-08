@@ -1,6 +1,6 @@
 # CS3
 
-This repository contains all of the materials necessary to complete this case study, including the hook document, rubric, data, code, and supplemental materials
+This repository contains all of the materials necessary to complete this case study, including the hook document, rubric, data, code, and supplemental materials.
 
 ## Section 1: Software and platform
 
