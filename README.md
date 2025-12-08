@@ -22,6 +22,9 @@ This repository contains all of the materials necessary to complete this case st
  3. **Supplemental Materials**
   - `A Practical Guide to ARIMA with auto.arima Function in R | by Zaki Nurkholis | Medium.pdf` – Article on the technicalbackground of building ARIMA models and making forecasts.
   - `What Is Climate Change? | United Nations.pdf` – Writing on the importance of studying temperatures rising.
+ 4. **Hook Document.pdf**
+ 5. **README.md**
+ 6. **Weather Temperatures Case Study Rubric.pdf**
 
 
 ## Section 3 – How to Reproduce Our Results
