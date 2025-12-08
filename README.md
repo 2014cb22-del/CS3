@@ -62,5 +62,11 @@ If you want to reproduce our analysis and see all the figures and tables from ou
   
 ## References
 
+Nurkholis, Z. “A Practical Guide to ARIMA with auto.arima Function in R.” Medium, 2021, https://medium.com/@mouse3mic3/a-practical-guide-to-arima-with-auto-arima-function-in-r-252aa84232af
+
+United Nations. “What Is Climate Change?” UN Climate Change. Web. https://www.un.org/en/climatechange/what-is-climate-change
+
+
+
 
 
