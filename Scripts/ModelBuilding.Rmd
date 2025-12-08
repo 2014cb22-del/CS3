@@ -9,7 +9,7 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-This file focuses on taking our cleaned dataset and building a time series model for both average min and max temperatures
+This file focuses on taking our dataset and building a time series model for both average min and max temperatures
 
 
 ```{r}
