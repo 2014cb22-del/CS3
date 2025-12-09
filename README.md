@@ -27,7 +27,7 @@ This repository contains all of the materials necessary to complete this case st
  6. **Weather Temperatures Case Study Rubric.pdf**
 
 
-## Section 3 – How to Reproduce Our Results
+## Section 3 – How to Get Results
 
 If you want to reproduce the analysis and see all the figures and tables for this case study, follow these steps:
 
