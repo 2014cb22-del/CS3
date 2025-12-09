@@ -20,7 +20,7 @@ This repository contains all of the materials necessary to complete this case st
  2. **Scripts**
   - `ModelBuilding.Rmd` – Model building script where time series model is fitted and forecats are made.
  3. **Supplemental Materials**
-  - `A Practical Guide to ARIMA with auto.arima Function in R | by Zaki Nurkholis | Medium.pdf` – Article on the technicalbackground of building ARIMA models and making forecasts.
+  - `A Practical Guide to ARIMA with auto.arima Function in R | by Zaki Nurkholis | Medium.pdf` – Article on the technical background of building ARIMA models and making forecasts.
   - `What Is Climate Change? | United Nations.pdf` – Writing on the importance of studying temperatures rising.
  4. **Hook Document.pdf**
  5. **README.md**
