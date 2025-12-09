@@ -29,7 +29,7 @@ This repository contains all of the materials necessary to complete this case st
 
 ## Section 3 – How to Reproduce Our Results
 
-If you want to reproduce our analysis and see all the figures and tables from our project, follow these steps:
+If you want to reproduce the analysis and see all the figures and tables for this case study, follow these steps:
 
 1. **Get the Repository**
    - Clone the repo using Git:
@@ -46,8 +46,8 @@ If you want to reproduce our analysis and see all the figures and tables from ou
    - These files are included in the repository, so you shouldn’t need to download anything else.
 
 3. **Install R and Packages**
-   - We used **R** (version 4.0 or higher) and RStudio.
-   - Install the packages we used if you don’t already have them:
+   - I used **R** (version 4.0 or higher) and RStudio.
+   - Install the packages used if you don’t already have them:
      ```r
      install.packages(c("tidyverse", "dplyr", "ggplot2",
                         "tidytext", "forecast", "knitr", "rmarkdown"))
@@ -57,7 +57,7 @@ If you want to reproduce our analysis and see all the figures and tables from ou
    - Open `ModelBuilding.Rmd` in RStudio.
    - Feel free to change the h values in the forecast function to predict more into the future (set to 12 right now to predict 12 months into future)
    - Click **Knit** to run all the code and generate the full report.
-   - This will produce the HTML (or PDF) report with all of our results, including plots, tables, and model outputs.
+   - This will produce the HTML (or PDF) report with all of results, including plots, tables, and model outputs.
 
 5. **Troubleshooting**
    - Make sure your working directory is the project folder and the CSV files are in the right place.
